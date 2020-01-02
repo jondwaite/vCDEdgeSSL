@@ -9,8 +9,8 @@
 #
 # Copyright 2019 Jon Waite, All Rights Reserved
 # Released under MIT License - see https://opensource.org/licenses/MIT
-# Date:         27th December 2019
-# Version:      0.1.4
+# Date:         3rd January 2020
+# Version:      0.1.5
 
 
 
@@ -177,16 +177,20 @@ Function Get-EdgeSSLCert{
             # Get certificates from the Edge GW:
             $CertURI = "$($EdgeSvr)/network/services/truststore/certificate/scope/$($EdgeId)/"
             $headers = @{'x-vcloud-authorization'=$sessionId;'Accept'='application/*+xml;version=' + $apiVersion}
-
-            [xml]$r = Invoke-WebRequest -Uri $CertURI -Headers $headers -Method Get
+            Try {
+                [xml]$r = Invoke-WebRequest -Uri $CertURI -Headers $headers -Method Get
+            } Catch {
+                Write-Host -ForegroundColor Red ("Error: $($_.Exception.Message)")
+                Write-Host -ForegroundColor Red ("Item: $($_.Exception.ItemName)")
+                Break
+            }
 
             if ($r.certificates.certificate.objectId) { # If certificates found in store
                 ForEach ($cert in $r.Certificates.certificate) {
 
-                    $certfile = $env:TMP + "\cert-data"
+                    $certfile = $env:TMP + "cert-data"
                     Set-Content -Path $certfile -Value $cert.pemEncoding
-                    $x509cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate
-                    $x509cert.Import($certfile)
+                    $x509cert = New-Object -TypeName System.Security.Cryptography.X509Certificates.X509Certificate2($certfile)
                     
                     $certObj = [PSCustomObject]@{
                         'EdgeGWName'        = [string]$edge.Name
