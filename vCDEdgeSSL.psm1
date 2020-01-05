@@ -684,7 +684,7 @@ Function Set-EdgeAppProfileCert{
         $r.applicationProfile.clientSsl.serviceCertificate = $cert.CertRef
 
         Try {
-            Invoke-WebRequest -Uri $AppProfURI -Method Put -Headers $headers -Body $r.OuterXml -ContentType 'application/xml' -ErrorAction Stop
+            Invoke-WebRequest -Uri $AppProfURI -Method Put -Headers $headers -Body $r.OuterXml -ContentType 'application/xml' -ErrorAction Stop | Out-Null
         } Catch {
             Write-Host -ForegroundColor Red("Error: Error encountered attempting to update application profile '$($AppProf.Name)' on Edge Gateway '$($EdgeGW.Name)'.")
             Write-Host -ForegroundColor Red ("Error: $($_.Exception.Message)")
