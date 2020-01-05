@@ -456,7 +456,7 @@ Function Remove-EdgeSSLCert{
         $CertURI = "$($EdgeSvr)/network/services/truststore/certificate/$($CertId)"
         $headers = @{'x-vcloud-authorization'=$sessionId;'Accept'='application/*+xml;version=' + $apiVersion}
         Try {
-            Invoke-WebRequest -Uri $CertURI -Headers $headers -Method Delete -ContentType 'application/xml' -ErrorAction Stop
+            Invoke-WebRequest -Uri $CertURI -Headers $headers -Method Delete -ContentType 'application/xml' -ErrorAction Stop | Out-Null
             Write-Host -ForegroundColor Green ("Certificate '$($CertId)' removed from Edge Gateway '$($EdgeGW.Name)' successfully.")
         } Catch {
             Write-Host -ForegroundColor Red("Error: Error encountered attempting to remove certificate '$($CertId)' from Edge Gateway '$($EdgeGW.Name)'.")
