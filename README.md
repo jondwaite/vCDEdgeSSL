@@ -30,16 +30,16 @@ versions. The cmdlets will  only work against NSX Edge Gateways configured in
 'Advanced' mode, but since the Load Balancer functionality is not enabled in
 'Basic' mode this shouldn't be an issue.
 
-Currently the module will only work on PowerShell / PowerCLI running on a
-Windows host due to differences in array/string handling in PowerShell core,
-I will attempt to update to a 'Core-Friendly' version in a future update.
+Update for 0.1.6: This module should now work correctly on PowerShell Core
+as well as PowerShell for Windows, I've tested functionality from core on
+OSX and everything appears to work correctly.
 
 ## Disclaimer
 
 I am not a professional developer and write these modules in my spare time to
 help our internal IT teams and customers interact with vCloud Director platforms
 which ours (and other) companies provide. There are probably many things that
-could be improved in this module. If you have probalems, please feel free to
+could be improved in this module. If you have problems, please feel free to
 contact me via Issues in Github and I will see what I can do to assist (no
 guarantees though) or feel free to fix yourself and submit a PR against this
 repository.
