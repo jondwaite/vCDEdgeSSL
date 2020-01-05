@@ -9,8 +9,8 @@
 #
 # Copyright 2019 Jon Waite, All Rights Reserved
 # Released under MIT License - see https://opensource.org/licenses/MIT
-# Date:         3rd January 2020
-# Version:      0.1.5
+# Date:         6th January 2020
+# Version:      0.1.6
 
 
 
@@ -356,10 +356,9 @@ Function Add-EdgeSSLCert{
 
         # Build PSCustomObject of uploaded certificate and return:
         $NewCert = $r.certificates.certificate
-        $tmpcertfile = $env:TMP + "\cert-data"
+        $tmpcertfile = $env:TMP + "cert-data"
         Set-Content -Path $tmpcertfile -Value $NewCert.pemEncoding
-        $x509cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate
-        $x509cert.Import($tmpcertfile)
+        $x509cert = New-Object -TypeName System.Security.Cryptography.X509Certificates.X509Certificate2($certfile)
         
         $certObj = [PSCustomObject]@{
             'EdgeGWName'        = [string]$EdgeGW.Name
